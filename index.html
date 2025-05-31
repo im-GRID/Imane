@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Imane's Purr-fect Day 🐱</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Comic+Neue:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #fff5f7 0%, #fff0f5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #ff6b8b;
+            position: relative;
+            overscroll-behavior-y: contain;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            background: linear-gradient(45deg, #ff6b8b, #ff8fab, #ffb3c6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.5s ease-in-out, float 3s ease-in-out infinite;
+            line-height: 1.2;
+        }
+
+        .date {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: #ff8fab;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .date::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffb3c6, transparent);
+            animation: expand 2s ease-out infinite;
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.15);
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #ff6b8b, #ffb3c6, #ff6b8b);
+            animation: rainbow 5s linear infinite;
+        }
+
+        .message p {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .heart {
+            color: #ff6b8b;
+            font-size: 1.5rem;
+            display: inline-block;
+            animation: pulse 1.5s infinite, beat 0.8s ease infinite;
+        }
+
+        .photo-frame {
+            width: clamp(150px, 50vw, 220px);
+            height: clamp(150px, 50vw, 220px);
+            margin: 1.5rem auto;
+            border-radius: 50%;
+            border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(255, 107, 139, 0.2),
+                        inset 0 0 20px rgba(255, 179, 198, 0.3);
+            overflow: hidden;
+            animation: fadeIn 2.5s ease-in-out, float 4s ease-in-out infinite;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .photo-frame::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b8b, #ffb3c6, #ff6b8b);
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+            opacity: 0.7;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b8b, #ff8fab);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 139, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            animation: fadeIn 3s ease-in-out, pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.6);
+            animation: none;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+            animation: shine 1.5s ease infinite;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .surprise {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hug {
+            font-size: clamp(2.5rem, 10vw, 3.5rem);
+            display: inline-block;
+            margin: 0.5rem 0;
+            animation: pulse 1s infinite, float 2s ease-in-out infinite;
+        }
+
+        /* Cat elements */
+        .cat {
+            position: absolute;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            animation: floatUp 8s linear infinite;
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .cat-paw {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: pawPrint 6s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        /* Floating elements */
+        .floating-hearts {
+            position: absolute;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            animation: floatUp 6s linear infinite;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(1px);
+            animation: sparkle 1s ease-out infinite;
+            z-index: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            50% { transform: scale(1.1); }
+            90% { opacity: 0.8; }
+            100% { 
+                transform: translateY(-100vh) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes expand {
+            0% { transform: scaleX(0); }
+            50% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; top: -100%; }
+            100% { left: 100%; top: 100%; }
+        }
+
+        @keyframes pawPrint {
+            0% { 
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            100% { 
+                transform: translateY(-80vh) rotate(180deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes catWalk {
+            0% { 
+                transform: translateX(-50px) rotateY(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            40% { transform: translateX(0) rotateY(0deg); }
+            50% { transform: translateX(0) rotateY(180deg); }
+            90% { 
+                transform: translateX(50px) rotateY(180deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(50px) rotateY(180deg);
+                opacity: 0;
+            }
+        }
+
+        /* Special cat animation for mobile */
+        .walking-cat {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            animation: catWalk 10s linear infinite;
+            z-index: 5;
+            display: none;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .message {
+                padding: 1.2rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.8rem;
+            }
+            
+            .walking-cat {
+                display: block;
+            }
+            
+            /* Reduce animation intensity for mobile performance */
+            .cat, .floating-hearts, .cat-paw {
+                animation-duration: 12s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="animate__animated animate__fadeInDown">Amuuunaaa</h1>
+        <div class="date">May 31st</div>
+        
+        <div class="photo-frame">
+            <!-- Replace with actual image path -->
+            <img src="freha.png" alt="Imane">
+        </div>
+        
+       <div class="message animate__animated animate__fadeInUp">
+    <p>Dear Imane,</p>
+    <p>On this purr-fect day, I’m celebrating not just my cousin, but someone who feels more like a sister to me.</p>
+    <p>May your life be filled with golden sunshine, and all the happy little meow-ments you deserve.</p>
+    <p>You’re paws-itively amazing <span class="heart">❤️</span></p>
+    <p>Happy Birthday!</p>
+</div>
+        
+     <button class="btn" id="surpriseBtn">🐱 Freha Has a Birthday Message for You! 🐾</button>
+
+<div class="surprise hidden" id="surprise">
+    <div class="message">
+        <p>🐾 Meow meow, Imane! 🐾</p>
+        <p>It's your favorite furry friend, Freha! 😺</p>
+        <p>I just wanted to say... Happy Purr-thday!</p>
+        <p class="hug">🐈💖 *virtual kitty Meowss*</p>
+        <p>Thanks for all the treats, head pats, and love. You’re the best hooman ever!</p>
+        <p>Wishing you a paws-itively wonderful day filled with purrs, naps, and joy. 🎉</p>
+    </div>
+</div>
+
+
+    <!-- Walking cat for mobile -->
+    <div class="walking-cat">🐈</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating cats and hearts
+            createFloatingCats(10);
+            createFloatingHearts(15);
+            createPawPrints(8);
+            
+            // Add sparkles to the name
+            addSparklesToName();
+            
+            // Surprise button
+            const surpriseBtn = document.getElementById('surpriseBtn');
+            const surprise = document.getElementById('surprise');
+            
+            surpriseBtn.addEventListener('click', function() {
+                surprise.classList.remove('hidden');
+                createConfetti(100);
+                createFloatingCats(5);
+                createFloatingHearts(20);
+                surpriseBtn.textContent = '🐾 More Cuteness! 🐾';
+                
+                // Create continuous effects while surprise is visible
+                const magicInterval = setInterval(() => {
+                    if (surprise.classList.contains('hidden')) {
+                        clearInterval(magicInterval);
+                        return;
+                    }
+                    createSparkles(5);
+                    createFloatingHearts(3);
+                    if (Math.random() > 0.7) createFloatingCats(1);
+                }, 1500);
+            });
+            
+            // Mobile-specific touch effects
+            document.addEventListener('touchstart', function(e) {
+                createTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (Math.random() > 0.7) {
+                    createTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            });
+        });
+        
+        function createFloatingCats(count) {
+            const cats = ['🐱', '🐈', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾'];
+            
+            for (let i = 0; i < count; i++) {
+                const cat = document.createElement('div');
+                cat.className = 'cat';
+                cat.textContent = cats[Math.floor(Math.random() * cats.length)];
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 8;
+                const delay = Math.random() * 5;
+                const fontSize = Math.random() * 1.5 + 1;
+                
+                cat.style.left = `${left}vw`;
+                cat.style.bottom = '0';
+                cat.style.fontSize = `${fontSize}rem`;
+                cat.style.animation = `floatUp ${animationDuration}s linear ${delay}s forwards`;
+                
+                document.body.appendChild(cat);
+                
+                // Remove cat after animation
+                setTimeout(() => {
+                    cat.remove();
+                }, (animationDuration + delay) * 1000);
+            }
+        }
+        
+        function createFloatingHearts(count) {
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍', '💖', '💗', '💘', '💝'];
+            
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-hearts';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 6 + 4;
+                const delay = Math.random() * 3;
+                const fontSize = Math.random() * 1 + 0.8;
+                
+                heart.style.left = `${left}vw`;
+                heart.style.bottom = '0';
+                heart.style.fontSize = `${fontSize}rem`;
+                heart.style.animation = `floatUp ${animationDuration}s linear ${delay}s forwards`;
+                
+                document.body.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, (animationDuration + delay) * 1000);
+            }
+        }
+        
+        function createPawPrints(count) {
+            for (let i = 0; i < count; i++) {
+                const paw = document.createElement('div');
+                paw.className = 'cat-paw';
+                paw.textContent = '🐾';
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 8 + 6;
+                const delay = Math.random() * 4;
+                const fontSize = Math.random() * 0.8 + 0.5;
+                
+                paw.style.left = `${left}vw`;
+                paw.style.bottom = '0';
+                paw.style.fontSize = `${fontSize}rem`;
+                paw.style.animation = `pawPrint ${animationDuration}s linear ${delay}s forwards`;
+                
+                document.body.appendChild(paw);
+                
+                // Remove paw after animation
+                setTimeout(() => {
+                    paw.remove();
+                }, (animationDuration + delay) * 1000);
+            }
+        }
+        
+        function createConfetti(count) {
+            const colors = ['#ff6b8b', '#ffb3c6', '#a5dff9', '#ffd166', '#a8e6cf', '#f7a8b8'];
+            const shapes = ['50%', '0', '25% 75% 25% 75% / 60% 40% 60% 40%'];
+            
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'floating-hearts';
+                confetti.textContent = ['✨', '🌟', '💫', '⭐', '🎀', '🦋'][Math.floor(Math.random() * 6)];
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 4 + 3;
+                const delay = Math.random() * 2;
+                const fontSize = Math.random() * 1 + 0.8;
+                
+                confetti.style.left = `${left}vw`;
+                confetti.style.top = '-20px';
+                confetti.style.fontSize = `${fontSize}rem`;
+                confetti.style.animation = `floatUp ${animationDuration}s linear ${delay}s forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, (animationDuration + delay) * 1000);
+            }
+        }
+        
+        function addSparklesToName() {
+            const name = document.querySelector('h1');
+            const nameRect = name.getBoundingClientRect();
+            
+            setInterval(() => {
+                createSparkles(2, 
+                    nameRect.left + Math.random() * nameRect.width, 
+                    nameRect.top + Math.random() * nameRect.height);
+            }, 1000);
+        }
+        
+        function createSparkles(count, x, y) {
+            for (let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                
+                // Random properties
+                const size = Math.random() * 6 + 4;
+                const posX = x || Math.random() * window.innerWidth;
+                const posY = y || Math.random() * window.innerHeight;
+                const delay = Math.random() * 0.5;
+                
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.left = `${posX}px`;
+                sparkle.style.top = `${posY}px`;
+                sparkle.style.animationDelay = `${delay}s`;
+                
+                document.body.appendChild(sparkle);
+                
+                // Remove sparkle after animation
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        }
+        
+        function createTouchHearts(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-hearts';
+            heart.textContent = ['❤️', '💖', '💗'][Math.floor(Math.random() * 3)];
+            
+            const size = Math.random() * 1 + 1;
+            const animationDuration = Math.random() * 3 + 2;
+            
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            heart.style.fontSize = `${size}rem`;
+            heart.style.animation = `floatUp ${animationDuration}s linear forwards`;
+            heart.style.position = 'fixed';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, animationDuration * 1000);
+        }
+    </script>
+</body>
+</html>
